@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\CourseController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,3 +15,5 @@ use App\Http\Controllers\Front\HomeController;
 */
 
 Route::get('/',[HomeController::class,'index']);
+Route::get('/cat/{id}',[CourseController::class,'cat'])->name('course.cat');
+Route::get('/cat/{id}/course/{c_id}',[CourseController::class,'show'])->name('course.show');
