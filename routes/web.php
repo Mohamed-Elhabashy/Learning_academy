@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\CourseController;
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,4 @@ use App\Http\Controllers\Front\CourseController;
 Route::get('/',[HomeController::class,'index'])->name('front.homepage');
 Route::get('/cat/{id}',[CourseController::class,'cat'])->name('front.course.cat');
 Route::get('/cat/{id}/course/{c_id}',[CourseController::class,'show'])->name('front.course.show');
+Route::get('/Contact',[ContactController::class,'index'])->name('front.Contact');
