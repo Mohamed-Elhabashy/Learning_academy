@@ -18,6 +18,16 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{route('admin.cats.index')}}">Categories</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{route('admin.trainer.index')}}">Trainers</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{route('admin.courses.index')}}">Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{route('admin.students.index')}}">Students</a>
+        </li>
       </ul>
       <ul class="navbar-nav  mb-2 mb-lg-0 ml-auto">
         <li class="nav-item">
