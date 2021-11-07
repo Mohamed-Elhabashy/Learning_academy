@@ -9,7 +9,9 @@ class student extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public function courses(){
-        return $this->belongsToMany('App\Models\course');
+
+    public function courses()
+    {
+        return $this->belongsToMany('App\Models\course')->withPivot('status');
     }
 }

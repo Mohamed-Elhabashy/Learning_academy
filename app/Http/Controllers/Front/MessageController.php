@@ -57,7 +57,7 @@ class MessageController extends Controller
                 $old_student->update(['spec' => $data['spec']]);
             }
         }
-        DB::table('_course__student')->insert([
+        DB::table('course_student')->insert([
             'course_id' => $data['course_id'],
             'student_id' => $student_id,
             'created_at' => now(),

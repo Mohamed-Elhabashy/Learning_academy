@@ -13,13 +13,13 @@ class CreateCourseStudent extends Migration
      */
     public function up()
     {
-        Schema::create('_course__student', function (Blueprint $table) {
+        Schema::create('course_student', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses');
             $table->unsignedBigInteger('student_id');
             $table->foreign('student_id')->references('id')->on('students');
-            $table->enum('status',['approve','rejected']);
+            $table->enum('status', ['approve', 'rejected']);
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateCourseStudent extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_course__student');
+        Schema::dropIfExists('course_student');
     }
 }

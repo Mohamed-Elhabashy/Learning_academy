@@ -61,4 +61,9 @@ Route::middleware('adminAuth:admin')->group(function () {
     Route::get('/dashboard/student/edit/{id}', [StudentController::class, 'edit'])->name('admin.students.edit');
     Route::post('/dashboard/student/update', [StudentController::class, 'update'])->name('admin.students.update');
     Route::get('/dashboard/student/delete/{id}', [StudentController::class, 'delete'])->name('admin.students.delete');
+    Route::get('/dashboard/student/ShowCourses/{id}', [StudentController::class, 'ShowCourses'])->name('admin.students.ShowCourses');
+    Route::get('/dashboard/student/{id}/ApproveCourses/{c_id}', [StudentController::class, 'ApproveCourses'])->name('admin.students.approvecourse');
+    Route::get('/dashboard/student/{id}/RejectCourses/{c_id}', [StudentController::class, 'RejectCourses'])->name('admin.students.rejectedcourse');
+    Route::get('/dashboard/student/{id}/AddToCourse', [StudentController::class, 'AddToCourse'])->name('admin.students.AddToCourse');
+    Route::post('/dashboard/student/StoreStudentCourse', [StudentController::class, 'StoreStudentCourse'])->name('admin.students.StoreStudentCourse');
 });

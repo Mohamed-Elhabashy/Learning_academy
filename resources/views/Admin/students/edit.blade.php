@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between mb-3">
-        <h6>Categories / Edit</h6>
+        <h6>Students / Edit</h6>
         <a class="btn btn-sm btn-primary" href="{{route('admin.students.index')}}">Back</a>
     </div>
     @include('admin.inc.errors')
