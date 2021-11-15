@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\cat;
@@ -15,14 +15,14 @@ class CourseController extends Controller
     public function index()
     {
         $data['courses'] = course::select('id', 'name', 'price', 'img')->orderBy('id', 'DESC')->get();
-        return View('Admin.courses.index')->with($data);
+        return View('admin.courses.index')->with($data);
     }
 
     public function create()
     {
-        $data['cats'] = cat::select('id', 'name')->get();
+        $data['categories'] = cat::select('id', 'name')->get();
         $data['trainers'] = trainer::select('id', 'name')->get();
-        return View('Admin.courses.create')->with($data);
+        return View('admin.courses.create')->with($data);
     }
 
     public function store(Request $request)
@@ -32,7 +32,7 @@ class CourseController extends Controller
             'small_desc' => 'required|string|max:191',
             'desc' => 'required|string',
             'price' => 'required|integer',
-            'cat_id' => 'required|exists:cats,id',
+            'cat_id' => 'required|exists:categories,id',
             'trainer_id' => 'required|exists:trainers,id',
             'img' => 'required|image|mimes:jpg,jpeg,png'
         ]);
@@ -45,10 +45,10 @@ class CourseController extends Controller
 
     public function edit($id)
     {
-        $data['cats'] = cat::select('id', 'name')->get();
+        $data['categories'] = cat::select('id', 'name')->get();
         $data['trainers'] = trainer::select('id', 'name')->get();
         $data['course'] = course::findOrFail($id);
-        return View('Admin.courses.edit')->with($data);
+        return View('admin.courses.edit')->with($data);
     }
 
     public function update(Request $request)
@@ -57,7 +57,7 @@ class CourseController extends Controller
             'name' => 'required|string|max:50',
             'small_desc' => 'required|string|max:191',
             'desc' => 'required|string',
-            'cat_id' => 'required|exists:cats,id',
+            'cat_id' => 'required|exists:categories,id',
             'trainer_id' => 'required|exists:trainers,id',
             'img' => 'nullable|image|mimes:jpg,jpeg,png'
         ]);

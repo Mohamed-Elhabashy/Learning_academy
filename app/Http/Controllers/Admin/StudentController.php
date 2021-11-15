@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Student\StoreStudentRequest;
+use App\Http\Requests\Student\UpdateStudentRequest;
 use App\Models\course;
-use App\Models\student;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,69 +14,65 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $data['students'] = student::select('id', 'name', 'email', 'spec')->orderBy('id', 'DESC')->get();
-        return View('Admin.students.index')->with($data);
+        $students = student::select('id', 'name', 'email', 'spec')->orderBy('id', 'DESC')->get();
+
+        return View('admin.students.index', ['students' => $students]);
     }
 
     public function create()
     {
-        return View('Admin.students.create');
+        return View('admin.students.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'nullable|string|max:191',
-            'email' => 'required|email|max:191|unique:students',
-            'spec' => 'nullable|string|max:191'
-        ]);
-        student::create($data);
-        return redirect(route('admin.students.index'));
+        Student::create($request->all());
+
+        return redirect()->route('admin.students.index');
     }
 
-    public function edit($id)
+    public function edit(Student $student)
     {
-        $data['student'] = student::findOrFail($id);
-        return View('Admin.students.edit')->with($data);
+        return View('admin.students.edit', ['student' => $student]);
     }
 
-    public function update(Request $request)
+    public function update(UpdateStudentRequest $request, Student $student)
     {
-        $data = $request->validate([
-            'name' => 'nullable|string|max:191',
-            'email' => 'required|email|max:191|unique:students',
-            'spec' => 'nullable|string|max:191'
-        ]);
-        student::findOrFail($request->id)->update($data);
-        return redirect(route('admin.students.index'));
+        $student->update($request->all());
+
+        return redirect()->route('admin.students.index');
     }
 
-    public function delete($id)
+    public function delete(Student $student)
     {
-        student::findOrFail($id)->delete();
-        return redirect(route('admin.students.index'));
+        $student->delete();
+
+        return back();
     }
 
     public function ShowCourses($id)
     {
         $data['student_id'] = $id;
         $data['courses'] = student::findOrFail($id)->courses;
+
         return View('admin.students.ShowCourses')->with($data);
     }
 
     public function ApproveCourses($id, $c_id)
     {
         DB::table('course_student')->where('student_id', $id)->where('course_id', $c_id)->update([
-            'status' => 'approve'
+            'status' => 'approve',
         ]);
+
         return back();
     }
 
     public function RejectCourses($id, $c_id)
     {
         DB::table('course_student')->where('student_id', $id)->where('course_id', $c_id)->update([
-            'status' => 'rejected'
+            'status' => 'rejected',
         ]);
+
         return back();
     }
 
@@ -82,6 +80,7 @@ class StudentController extends Controller
     {
         $data['student_id'] = $id;
         $data['courses'] = course::select('id', 'name')->get();
+
         return View('admin.students.AddStudentToCourse')->with($data);
     }
 
@@ -89,12 +88,13 @@ class StudentController extends Controller
     {
         $data = $request->validate([
             'student_id' => 'required|exists:students,id',
-            'course_id' => 'required|exists:courses,id'
+            'course_id' => 'required|exists:courses,id',
         ]);
         DB::table('course_student')->insert([
             'student_id' => $data['student_id'],
-            'course_id' => $data['course_id']
+            'course_id' => $data['course_id'],
         ]);
+
         return redirect(route('admin.students.ShowCourses', $data['student_id']));
     }
 }

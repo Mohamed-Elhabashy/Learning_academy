@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\trainer;
@@ -13,12 +13,12 @@ class TrainerController extends Controller
     public function index()
     {
         $data['trainers'] = trainer::select('id', 'name', 'phone', 'spec', 'img')->orderBy('id', 'DESC')->get();
-        return View('Admin.trainers.index')->with($data);
+        return View('admin.trainers.index')->with($data);
     }
 
     public function create()
     {
-        return View('Admin.trainers.create');
+        return View('admin.trainers.create');
     }
 
     public function store(Request $request)
@@ -39,7 +39,7 @@ class TrainerController extends Controller
     public function edit($id)
     {
         $data['trainer'] = trainer::findOrFail($id);
-        return View('Admin.trainers.edit')->with($data);
+        return View('admin.trainers.edit')->with($data);
     }
 
     public function update(Request $request)

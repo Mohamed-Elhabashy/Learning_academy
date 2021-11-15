@@ -15,7 +15,7 @@ class ViewServicesProvider extends ServiceProvider
     public function register()
     {
         View()->composer('Front.inc.Header',function ($view){
-            $view->with('cats',cat::select('id','name')->get());
+            $view->with('categories',cat::select('id','name')->get());
         });
         View()->composer('Front.inc.Header',function ($view){
             $view->with('setting',Setting::select('logo','favicon')->first());

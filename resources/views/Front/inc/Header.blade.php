@@ -33,14 +33,11 @@
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <a class="navbar-brand" href="{{Route('front.homepage')}}"> <img src="{{asset('Settings/'.$setting->logo)}}" alt="logo"> </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
-                        <div class="collapse navbar-collapse main-menu-item justify-content-end"
-                            id="navbarSupportedContent">
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end" id="navbarSupportedContent">
                             <ul class="navbar-nav align-items-center">
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{Route('front.homepage')}}">Home</a>
@@ -50,8 +47,8 @@
                                         Courses
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        @foreach($cats as $cat)
-                                            <a class="dropdown-item" href="{{Route('front.course.cat',$cat->id)}}">{{$cat->name}}</a>
+                                        @foreach($categories as $cat)
+                                        <a class="dropdown-item" href="{{Route('front.course.cat',$cat->id)}}">{{$cat->name}}</a>
                                         @endforeach
                                     </div>
                                 </li>

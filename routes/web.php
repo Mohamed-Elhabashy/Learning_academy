@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\CatController;
-use App\Http\Controllers\Admin\StudentController;
-use App\Http\Controllers\Admin\TrainerController;
+use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\StudentController;
+use App\Http\Controllers\admin\TrainerController;
 use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\CourseController;
 use App\Http\Controllers\Front\HomeController;
@@ -31,15 +31,26 @@ Route::post('/message/enroll', [MessageController::class, 'enroll'])->name('fron
 Route::get('/dashboard/login', [AuthController::class, 'login'])->name('admin.login');
 Route::post('/dashboard/SubmitLogin', [AuthController::class, 'SubmitLogin'])->name('submit.login');
 Route::middleware('adminAuth:admin')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.homepage');
+    Route::get('/dashboard', [App\Http\Controllers\admin\HomeController::class, 'index'])->name('admin.homepage');
     Route::get('/dashboard/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-    Route::get('/dashboard/cats', [CatController::class, 'index'])->name('admin.cats.index');
-    Route::get('/dashboard/cats/create', [CatController::class, 'create'])->name('admin.cats.create');
-    Route::post('/dashboard/cats/store', [CatController::class, 'store'])->name('admin.cats.store');
-    Route::get('/dashboard/cats/edit/{id}', [CatController::class, 'edit'])->name('admin.cats.edit');
-    Route::post('/dashboard/cats/update', [CatController::class, 'update'])->name('admin.cats.update');
-    Route::get('/dashboard/cats/delete/{id}', [CatController::class, 'delete'])->name('admin.cats.delete');
+    Route::prefix('dashboard')->as('admin.')->group(function () {
+        // ================== Start Students Routes =====================================
+        Route::resource('students', StudentController::class);
+
+        Route::prefix('students')->group(function () {
+            Route::get('ShowCourses/{id}', [StudentController::class, 'ShowCourses'])->name('ShowCourses');
+            Route::get('{id}/ApproveCourses/{c_id}', [StudentController::class, 'ApproveCourses'])->name('approvecourse');
+            Route::get('{id}/RejectCourses/{c_id}', [StudentController::class, 'RejectCourses'])->name('rejectedcourse');
+            Route::get('{id}/AddToCourse', [StudentController::class, 'AddToCourse'])->name('AddToCourse');
+            Route::post('StoreStudentCourse', [StudentController::class, 'StoreStudentCourse'])->name('StoreStudentCourse');
+        });
+        // ================== End Students Routes =====================================
+
+        // ================== Start Categories Routes =====================================
+        Route::resource('categories', CategoryController::class);
+        // ================== Start Categories Routes =====================================
+    });
 
     Route::get('/dashboard/trainer', [TrainerController::class, 'index'])->name('admin.trainer.index');
     Route::get('/dashboard/trainer/create', [TrainerController::class, 'create'])->name('admin.trainer.create');
@@ -48,22 +59,10 @@ Route::middleware('adminAuth:admin')->group(function () {
     Route::post('/dashboard/trainer/update', [TrainerController::class, 'update'])->name('admin.trainer.update');
     Route::get('/dashboard/trainer/delete/{id}', [TrainerController::class, 'delete'])->name('admin.trainer.delete');
 
-    Route::get('/dashboard/course', [App\Http\Controllers\Admin\CourseController::class, 'index'])->name('admin.courses.index');
-    Route::get('/dashboard/course/create', [App\Http\Controllers\Admin\CourseController::class, 'create'])->name('admin.courses.create');
-    Route::post('/dashboard/course/store', [App\Http\Controllers\Admin\CourseController::class, 'store'])->name('admin.courses.store');
-    Route::get('/dashboard/course/edit/{id}', [App\Http\Controllers\Admin\CourseController::class, 'edit'])->name('admin.courses.edit');
-    Route::post('/dashboard/course/update', [App\Http\Controllers\Admin\CourseController::class, 'update'])->name('admin.courses.update');
-    Route::get('/dashboard/course/delete/{id}', [App\Http\Controllers\Admin\CourseController::class, 'delete'])->name('admin.courses.delete');
-
-    Route::get('/dashboard/student', [StudentController::class, 'index'])->name('admin.students.index');
-    Route::get('/dashboard/student/create', [StudentController::class, 'create'])->name('admin.students.create');
-    Route::post('/dashboard/student/store', [StudentController::class, 'store'])->name('admin.students.store');
-    Route::get('/dashboard/student/edit/{id}', [StudentController::class, 'edit'])->name('admin.students.edit');
-    Route::post('/dashboard/student/update', [StudentController::class, 'update'])->name('admin.students.update');
-    Route::get('/dashboard/student/delete/{id}', [StudentController::class, 'delete'])->name('admin.students.delete');
-    Route::get('/dashboard/student/ShowCourses/{id}', [StudentController::class, 'ShowCourses'])->name('admin.students.ShowCourses');
-    Route::get('/dashboard/student/{id}/ApproveCourses/{c_id}', [StudentController::class, 'ApproveCourses'])->name('admin.students.approvecourse');
-    Route::get('/dashboard/student/{id}/RejectCourses/{c_id}', [StudentController::class, 'RejectCourses'])->name('admin.students.rejectedcourse');
-    Route::get('/dashboard/student/{id}/AddToCourse', [StudentController::class, 'AddToCourse'])->name('admin.students.AddToCourse');
-    Route::post('/dashboard/student/StoreStudentCourse', [StudentController::class, 'StoreStudentCourse'])->name('admin.students.StoreStudentCourse');
+    Route::get('/dashboard/course', [App\Http\Controllers\admin\CourseController::class, 'index'])->name('admin.courses.index');
+    Route::get('/dashboard/course/create', [App\Http\Controllers\admin\CourseController::class, 'create'])->name('admin.courses.create');
+    Route::post('/dashboard/course/store', [App\Http\Controllers\admin\CourseController::class, 'store'])->name('admin.courses.store');
+    Route::get('/dashboard/course/edit/{id}', [App\Http\Controllers\admin\CourseController::class, 'edit'])->name('admin.courses.edit');
+    Route::post('/dashboard/course/update', [App\Http\Controllers\admin\CourseController::class, 'update'])->name('admin.courses.update');
+    Route::get('/dashboard/course/delete/{id}', [App\Http\Controllers\admin\CourseController::class, 'delete'])->name('admin.courses.delete');
 });

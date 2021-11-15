@@ -1,4 +1,4 @@
-@extends('Admin.Layout')
+@extends('admin.Layout')
 
 @section('content')
     <div class="d-flex justify-content-between mb-3">

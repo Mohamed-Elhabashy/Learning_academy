@@ -1,4 +1,4 @@
-@extends('Admin.Layout')
+@extends('admin.Layout')
 
 @section('content')
     <div class="d-flex justify-content-between mb-3">
@@ -16,7 +16,7 @@
             <label>Category</label>
             <select class="form-control mt-2" name="cat_id">
                 <option value=""></option>  
-                @foreach($cats as $cat)
+                @foreach($categories as $cat)
                     <option value={{$cat->id}}>{{$cat->name}}</option>
                 @endforeach
             </select>

@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+-- phpMyadmin SQL Dump
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
@@ -46,10 +46,10 @@ INSERT INTO `admins` (`id`, `username`, `email`, `password`, `created_at`, `upda
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cats`
+-- Table structure for table `categories`
 --
 
-CREATE TABLE `cats` (
+CREATE TABLE `categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -57,10 +57,10 @@ CREATE TABLE `cats` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `cats`
+-- Dumping data for table `categories`
 --
 
-INSERT INTO `cats` (`id`, `name`, `created_at`, `updated_at`) VALUES
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (4, 'Programming', '2021-11-07 12:18:43', '2021-11-07 12:18:43'),
 (5, 'C++', '2021-11-07 12:20:12', '2021-11-07 12:20:12'),
 (6, 'Java', '2021-11-07 12:20:19', '2021-11-07 12:20:26');
@@ -155,7 +155,7 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(2, '2021_10_28_015227_create_cats_table', 1),
+(2, '2021_10_28_015227_create_categories_table', 1),
 (3, '2021_10_28_015249_create_trainers_table', 1),
 (4, '2021_10_28_015309_create_courses_table', 1),
 (5, '2021_10_28_015327_create_students_table', 1),
@@ -290,9 +290,9 @@ ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cats`
+-- Indexes for table `categories`
 --
-ALTER TABLE `cats`
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -366,9 +366,9 @@ ALTER TABLE `admins`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `cats`
+-- AUTO_INCREMENT for table `categories`
 --
-ALTER TABLE `cats`
+ALTER TABLE `categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
@@ -433,7 +433,7 @@ ALTER TABLE `trainers`
 -- Constraints for table `courses`
 --
 ALTER TABLE `courses`
-  ADD CONSTRAINT `courses_cat_id_foreign` FOREIGN KEY (`cat_id`) REFERENCES `cats` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `courses_cat_id_foreign` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `courses_trainer_id_foreign` FOREIGN KEY (`trainer_id`) REFERENCES `trainers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
